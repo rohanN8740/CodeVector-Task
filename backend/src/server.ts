@@ -10,6 +10,9 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Backend Version 2");
+});
 
 // Helper to encode a cursor to base64
 function encodeCursor(createdAt: Date, id: string): string {
@@ -215,6 +218,8 @@ app.post('/api/products/simulate-update', async (req: Request, res: Response) =>
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+console.log("SERVER VERSION 2");
 
 // Start the server
 app.listen(port, () => {
