@@ -10,8 +10,18 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("Backend Version 2");
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "CodeVector Backend API is running 🚀",
+    version: "2.0",
+    endpoints: {
+      products: "/api/products",
+      categories: "/api/categories",
+      simulateAdd: "POST /api/products/simulate-add",
+      simulateUpdate: "POST /api/products/simulate-update"
+    }
+  });
 });
 
 // Helper to encode a cursor to base64
@@ -36,6 +46,7 @@ function decodeCursor(cursorStr: string): { createdAt: Date; id: string } | null
 
 // 1. GET /api/products - Paginated product feed
 app.get('/api/products', async (req: Request, res: Response): Promise<void> => {
+  console.log("GET /api/products called");
   const category = req.query.category as string | undefined;
   const cursorStr = req.query.cursor as string | undefined;
   const limit = parseInt(req.query.limit as string) || 20;
@@ -122,8 +133,15 @@ app.get('/api/products', async (req: Request, res: Response): Promise<void> => {
       executionTimeMs,
     });
   } catch (err: any) {
-    console.error('Error fetching products:', err);
-    res.status(500).json({ success: false, error: err.message });
+  console.error("GET /api/products failed");
+  console.error(err);
+
+  res.status(500).json({
+    success: false,
+    message: "Failed to fetch products",
+    error: err.message,
+    stack: process.env.NODE_ENV !== "production" ? err.stack : undefined
+  });
   }
 });
 
@@ -219,9 +237,13 @@ app.post('/api/products/simulate-update', async (req: Request, res: Response) =>
   }
 });
 
-console.log("SERVER VERSION 2");
+console.log("================================");
+console.log("🚀 CodeVector Backend Started");
+console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+console.log(`Port: ${port}`);
+console.log("================================");
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`✅ Server listening on port ${port}`);
 });
