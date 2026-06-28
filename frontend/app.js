@@ -230,6 +230,9 @@ menuItems.forEach((item) => {
       label === "Catalog Feed" ? "Product Catalog Feed" : label;
 
     logToConsole(`Switched dashboard workspace to: "${label}"`, "info");
+    
+    // Auto-close sidebar on mobile
+    closeSidebar();
   });
 });
 
@@ -383,3 +386,23 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchCategories();
   fetchProducts();
 });
+
+// ================= Mobile Drawer Navigation =================
+const sidebar = document.getElementById('dashboard-sidebar');
+const btnSidebarToggle = document.getElementById('btn-sidebar-toggle');
+const btnSidebarClose = document.getElementById('btn-sidebar-close');
+const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+function openSidebar() {
+  if (sidebar) sidebar.classList.add('open');
+  if (sidebarBackdrop) sidebarBackdrop.classList.add('visible');
+}
+
+function closeSidebar() {
+  if (sidebar) sidebar.classList.remove('open');
+  if (sidebarBackdrop) sidebarBackdrop.classList.remove('visible');
+}
+
+if (btnSidebarToggle) btnSidebarToggle.addEventListener('click', openSidebar);
+if (btnSidebarClose) btnSidebarClose.addEventListener('click', closeSidebar);
+if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);

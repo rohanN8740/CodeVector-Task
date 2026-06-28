@@ -10,19 +10,30 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Mobile Sticky Header -->
+  <div class="mobile-header">
+    <button id="btn-sidebar-toggle" class="sidebar-toggle-btn">☰</button>
+    <div class="mobile-logo">⚡ CodeVector</div>
+    <div class="mobile-status"><span class="pulse-dot"></span></div>
+  </div>
+  
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  
   <!-- Atmospheric Background Glows -->
   <div class="glass-bg-decor decor-1"></div>
   <div class="glass-bg-decor decor-2"></div>
   
   <div class="dashboard-layout">
     <!-- 1. Left Sidebar Navigation -->
-    <aside class="dashboard-sidebar">
+    <aside class="dashboard-sidebar" id="dashboard-sidebar">
       <div class="sidebar-brand">
         <span class="brand-logo">⚡</span>
         <div>
           <h2>CodeVector Task</h2>
           <span class="brand-badge">High Performance Pagination</span>
         </div>
+        <button id="btn-sidebar-close" class="sidebar-close-btn">✕</button>
       </div>
       
       <nav class="sidebar-nav">
